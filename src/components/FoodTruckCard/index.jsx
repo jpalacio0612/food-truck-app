@@ -47,7 +47,7 @@ const FoodTruckCard = ({ foodTruck }) => {
   const { applicant, locationDescription, foodItems } = foodTruck;
 
   return (
-    <Card sx={{ minWidth: 345 }}>
+    <Card sx={{ width: 345 }}>
       <CardHeader
         avatar={<Avatar {...avatarToString(applicant)} />}
         title={applicant}

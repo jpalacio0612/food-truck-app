@@ -1,48 +1,62 @@
-import { Box, Typography } from "@mui/material";
+import { Box, OutlinedInput, Typography } from "@mui/material";
 import FoodTruckCard from "./components/FoodTruckCard";
 import { useEffect, useState } from "react";
 import axios from "./lib/axiosInstance";
-import { Debounce } from "./utils/debounce";
+import SearchIcon from "@mui/icons-material/Search";
 
-const LIMIT = 10;
-const debounce = new Debounce(null, 1000);
+const LIMIT = 20;
 
 export default function App() {
   const [foodTrucks, setFoodTrucks] = useState([]);
   const [offset, setOffset] = useState(0);
-
-  debounce.addCallback(() => setOffset((prevOffset) => prevOffset + LIMIT));
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     axios
       .get("/food-trucks", {
         params: {
           limit: LIMIT,
-          offset: offset,
+          offset,
+          search,
         },
       })
       .then((response) => {
+        if (offset === 0) {
+          setFoodTrucks(response.data);
+          return;
+        }
+
         setFoodTrucks((prev) => [...prev, ...response.data]);
       })
       .catch((error) => {
         console.error("Error fetching food trucks", error);
       });
-  }, [offset]);
+  }, [offset, search]);
 
   const scrollHandler = (event) => {
     const { scrollTop, clientHeight, scrollHeight } = event.target;
 
-    if (Math.ceil(scrollTop + clientHeight) === scrollHeight) {
-      debounce.execute();
+    console.log(Math.ceil(scrollTop + clientHeight));
+    console.log(scrollHeight);
+
+    if (Math.ceil(scrollTop + clientHeight) >= scrollHeight) {
+      setOffset((prevOffset) => prevOffset + LIMIT);
     }
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        overflow: "hidden",
+        height: "100vh",
+      }}
+    >
       <Box
+        as="header"
         sx={{
           display: "flex",
           alignItems: "center",
+          justifyContent: "space-between",
           height: 64,
           px: 2,
           backgroundColor: "primary.main",
@@ -54,8 +68,19 @@ export default function App() {
             color: "white",
           }}
         >
-          Food Truck App
+          Food Truck
         </Typography>
+        <OutlinedInput
+          value={search}
+          onChange={(event) => {
+            setSearch(event.target.value);
+            setOffset(0);
+          }}
+          endAdornment={<SearchIcon />}
+          size="small"
+          sx={{ backgroundColor: "white" }}
+          placeholder="Search..."
+        />
       </Box>
       <Box
         sx={{
@@ -63,7 +88,7 @@ export default function App() {
           flexWrap: "wrap",
           gap: 2,
           padding: 2,
-          overflow: "auto",
+          overflow: "scroll",
           height: "calc(100vh - 64px)",
         }}
         onScroll={scrollHandler}
