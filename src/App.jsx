@@ -85,6 +85,7 @@ export default function App() {
       <Box
         sx={{
           display: "flex",
+          justifyContent: "center",
           flexWrap: "wrap",
           gap: 2,
           padding: 2,

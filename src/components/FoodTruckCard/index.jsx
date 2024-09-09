@@ -47,18 +47,38 @@ const FoodTruckCard = ({ foodTruck }) => {
   const { applicant, locationDescription, foodItems } = foodTruck;
 
   return (
-    <Card sx={{ width: 345 }}>
+    <Card
+      sx={{
+        width: 345,
+      }}
+    >
       <CardHeader
         avatar={<Avatar {...avatarToString(applicant)} />}
         title={applicant}
       />
       <CardContent>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {foodItems}
-        </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {locationDescription}
-        </Typography>
+        <Box>
+          <Typography
+            variant="body2"
+            sx={{ color: "text.secondary", fontWeight: "bold" }}
+          >
+            Menu:
+          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            {foodItems}
+          </Typography>
+        </Box>
+        <Box>
+          <Typography
+            variant="body2"
+            sx={{ color: "text.secondary", fontWeight: "bold" }}
+          >
+            Address:
+          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            {locationDescription}
+          </Typography>
+        </Box>
       </CardContent>
       <CardActions disableSpacing>
         <ExpandMore
