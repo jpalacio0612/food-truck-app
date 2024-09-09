@@ -21,7 +21,7 @@ Even though I have experience with Next.js and I know the benefits of server-sid
 
 - Add more features to the app, such as user authentication, user profiles, and the ability to add food trucks to the list.
 - Improve the design of the app by adding more styling and animations.
-- Add unit tests and integration tests to ensure the app is working correctly.
+- Add more unit tests and integration tests to ensure the app is working correctly.
 - Add End-to-End tests using Cypress.
 
 ## Technologies
@@ -38,7 +38,21 @@ Even though I have experience with Next.js and I know the benefits of server-sid
 4. Install the required dependencies by running `npm install`.
 5. Start the server by running `npm dev`.
 
-## Deployment
+## Building and Deploy for production (CI/CD)
 
-1. Create a production build by running `npm run build`.
-2. Deploy the build folder to a web server or hosting service.
+Execute the following commands in order in your pipeline in order to deploy the server:
+
+1. Add the required environment variables to the server.
+2. Install the required dependencies by running `npm install`.
+3. Run linting and tests by running `npm run lint` and `npm run test`.
+4. Build the project for production by running `npm run build`.
+
+This will create a build and output it to the `dist` directory. You can serve that build code in whatever environment you choose, remembering to set the required environment variables.
+
+## How to use the app
+
+1. Open the app in your web browser.
+2. View the list of food trucks on the home page.
+3. Click on the arrow button to view the comments for each food truck.
+4. Use the search bar to search for food trucks by name.
+5. Scroll down the page to load more food trucks.

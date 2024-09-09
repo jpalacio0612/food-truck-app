@@ -36,9 +36,6 @@ export default function App() {
   const scrollHandler = (event) => {
     const { scrollTop, clientHeight, scrollHeight } = event.target;
 
-    console.log(Math.ceil(scrollTop + clientHeight));
-    console.log(scrollHeight);
-
     if (Math.ceil(scrollTop + clientHeight) >= scrollHeight) {
       setOffset((prevOffset) => prevOffset + LIMIT);
     }
